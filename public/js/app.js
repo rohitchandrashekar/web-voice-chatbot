@@ -2,9 +2,6 @@
 
 const socket = io();
 
-const outputYou = document.querySelector('.you-said');
-const outputBot = document.querySelector('.she-said');
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
@@ -26,7 +23,7 @@ recognition.addEventListener('result', (e) => {
     let last = e.results.length - 1;
     let text = e.results[last][0].transcript;
 
-    outputYou.textContent = text;
+    addUserChatMessage(text);
     console.log('Confidence: ' + e.results[0][0].confidence);
 
     socket.emit('user says', text);
@@ -49,7 +46,40 @@ function synthVoice(text) {
 
 socket.on('bot reply', function (replyText) {
     synthVoice(replyText);
-
     if (replyText == '') replyText = '(No answer...)';
-    outputBot.textContent = replyText;
+    addBotChatMessage(replyText);
 });
+
+function addUserChatMessage(message) {
+    let currentContent = document.getElementById('chat-content');
+    let userContentContainer = document.createElement('div');
+    userContentContainer.className = 'container';
+    let userContentIcons = document.createElement('i');
+    userContentIcons.className = 'fas fa-user-circle'
+    let userContentPara = document.createElement('p');
+    userContentPara.innerText = message;
+    let userContentTime = document.createElement('span');
+    userContentTime.className = 'time-right';
+    userContentTime.innerText = new Date();
+    userContentContainer.appendChild(userContentIcons);
+    userContentContainer.appendChild(userContentPara);
+    userContentContainer.appendChild(userContentTime);
+    currentContent.appendChild(userContentContainer);
+}
+
+function addBotChatMessage(message) {
+    let currentContent = document.getElementById('chat-content');
+    let botContentContainer = document.createElement('div');
+    botContentContainer.className = 'container darker';
+    let botContentIcons = document.createElement('i');
+    botContentIcons.className = 'fas fa-robot right'
+    let botContentPara = document.createElement('p');
+    botContentPara.innerText = message;
+    let botContentTime = document.createElement('span');
+    botContentTime.className = 'time-left';
+    botContentTime.innerText = new Date();
+    botContentContainer.appendChild(botContentIcons);
+    botContentContainer.appendChild(botContentPara);
+    botContentContainer.appendChild(botContentTime);
+    currentContent.appendChild(botContentContainer);
+}
