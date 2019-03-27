@@ -1,0 +1,21 @@
+{
+  "name": "web-voice-chatbot",
+  "version": "1.0.0",
+  "description": "browser based AI chat interface leveraging the Web Speech API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohitchandrashekar/web-voice-chatbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohitchandrashekar/web-voice-chatbot/issues"
+  },
+  "homepage": "https://github.com/rohitchandrashekar/web-voice-chatbot#readme"
+}
